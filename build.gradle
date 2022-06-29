@@ -1,0 +1,19 @@
+plugins {
+    id 'java' // Para compilar
+    id 'application' // Para poder descargar las dependencias desde maven central
+}
+
+project.ext.lwjglVersion = "3.3.1"
+project.ext.lwjglNatives = "natives-windows"
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+}
+
+dependencies {
+	implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
+
+	implementation "org.lwjgl:lwjgl"
+	runtimeOnly "org.lwjgl:lwjgl::$lwjglNatives"
+}
