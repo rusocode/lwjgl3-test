@@ -3,8 +3,19 @@ plugins {
     id 'application' // Para poder descargar las dependencias desde maven central
 }
 
-project.ext.lwjglVersion = "3.3.1"
-project.ext.lwjglNatives = "natives-windows"
+// sourceSets.main.java.srcDirs = [ "src/main/java/" ]
+
+/* sourceSets {
+    main.java.srcDirs = ["src/main/java/"]
+    main.resources.srcDirs = ["resources/"]
+} */
+
+// Propiedades extras
+ext {
+    lwjglVersion = '3.3.1'
+    lwjglNatives = 'natives-windows'
+}
+
 
 repositories {
 	mavenLocal()
@@ -17,7 +28,7 @@ dependencies {
 	implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
 
     // Define dependencias sin versiones usando el BOM
-	implementation "org.lwjgl:lwjgl"
+	implementation 'org.lwjgl:lwjgl'
 
 	runtimeOnly "org.lwjgl:lwjgl::$lwjglNatives"
 }
