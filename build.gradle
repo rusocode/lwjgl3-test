@@ -22,16 +22,16 @@ ext {
 }
 
 repositories {
-	mavenLocal()
-	mavenCentral()
+    mavenLocal()
+    mavenCentral()
 }
 
 dependencies {
     // BOM https://github.com/LWJGL/lwjgl3/issues/481
-	implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
+    implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
     // Define dependencias sin versiones usando el BOM
-	implementation 'org.lwjgl:lwjgl'
-	runtimeOnly "org.lwjgl:lwjgl::$lwjglNatives"
+    implementation 'org.lwjgl:lwjgl'
+    runtimeOnly "org.lwjgl:lwjgl::$lwjglNatives"
     // Framework de prueba JUnit 
     testImplementation 'junit:junit:4.13.2'
 }
