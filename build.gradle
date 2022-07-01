@@ -1,7 +1,12 @@
 plugins {
-    id 'java' // Para compilar
-    id 'application' // Para poder descargar las dependencias desde maven central
+    id 'java' // Tareas de la JVM
+    id 'java-library' // Aplique el complemento java-library para API y separacion de implementacion
+    id 'application' // ?
 }
+
+// ¿Hace falta esto?
+// sourceCompatibility '1.8'
+// targetCompatibility '1.8'
 
 // sourceSets.main.java.srcDirs = [ "src/main/java/" ]
 
@@ -16,19 +21,17 @@ ext {
     lwjglNatives = 'natives-windows'
 }
 
-
 repositories {
 	mavenLocal()
 	mavenCentral()
 }
 
 dependencies {
-
     // BOM https://github.com/LWJGL/lwjgl3/issues/481
 	implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
-
     // Define dependencias sin versiones usando el BOM
 	implementation 'org.lwjgl:lwjgl'
-
 	runtimeOnly "org.lwjgl:lwjgl::$lwjglNatives"
+    // Framework de prueba JUnit 
+    testImplementation 'junit:junit:4.13.2'
 }
