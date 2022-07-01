@@ -5,14 +5,18 @@
 } */
 
 apply plugin: 'java'
-apply plugin: 'java-library'
-apply plugin: 'application'
+// apply plugin: 'java-library' // ¿Hace falta este plugin si ya uso el de java?
+apply plugin: 'application' // ¿Este tambien?
 
 version = '0.1.0'
 
+// https://docs.gradle.org/current/userguide/toolchains.html
+// https://www.youtube.com/watch?v=9Ja7grGM32c
 java {
     toolchain {
+        // Especifica la version de java a usar
         languageVersion = JavaLanguageVersion.of(8)
+        // En caso de que no la encuentre localmente, la descarga desde ADOPTIUM
         vendor = JvmVendorSpec.ADOPTIUM
     }
 }
@@ -46,6 +50,6 @@ dependencies {
     // Define dependencias sin versiones usando el BOM
     implementation 'org.lwjgl:lwjgl'
     runtimeOnly "org.lwjgl:lwjgl::$lwjglNatives"
-    // Framework de prueba JUnit 
-    testImplementation 'junit:junit:4.13.2'
+    // Framework de prueba JUnit
+	testImplementation 'junit:junit:4.13.2'
 }
