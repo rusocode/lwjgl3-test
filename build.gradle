@@ -1,36 +1,18 @@
-/* plugins {
-    id 'java' // Tareas de la JVM
-    id 'java-library' // Aplique el complemento java-library para API y separacion de implementacion
-    id 'application' // ?
-} */
+// El plugin application aplica automaticamente el plugin de java, por lo que no es necesario aplicar ambos
+apply plugin: 'application'
+// Entonces no hace falta agregar el plugin de java? Ver: https://tomgregory.com/10-best-gradle-plugins-for-java-projects/
+// apply plugin: 'java'
+/* Los 2 tipos principales de componentes de software Java que puede crear son aplicaciones y bibliotecas. Para crear 
+ * una biblioteca que sera consumida por otros proyectos de Java, aplique el plugin java-library. */
+// apply plugin: 'java-library'
 
-apply plugin: 'java'
-// apply plugin: 'java-library' // ¿Hace falta este plugin si ya uso el de java?
-apply plugin: 'application' // ¿Este tambien?
-
-version = '0.1.0'
-
-// https://docs.gradle.org/current/userguide/toolchains.html
-// https://www.youtube.com/watch?v=9Ja7grGM32c
-java {
-    toolchain {
-        // Especifica la version de java a usar
-        languageVersion = JavaLanguageVersion.of(8)
-        // En caso de que no la encuentre localmente, la descarga desde ADOPTIUM
-        vendor = JvmVendorSpec.ADOPTIUM
-    }
-}
+group 'com.craivet'
+version '0.1.0'
 
 ext {
     lwjglVersion = '3.3.1'
     lwjglNatives = 'natives-windows'
 }
-
-// ¿Hace falta esto?
-// sourceCompatibility '1.8'
-// targetCompatibility '1.8'
-// sourceCompatibility JavaVersion.VERSION_1_8
-// targetCompatibility JavaVersion.VERSION_1_8
 
 // sourceSets.main.java.srcDirs = [ "src/main/java/" ]
 
@@ -47,9 +29,28 @@ repositories {
 dependencies {
     // BOM https://github.com/LWJGL/lwjgl3/issues/481
     implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
-    // Define dependencias sin versiones usando el BOM
+    // Define dependencias sin versionar usando el BOM
     implementation 'org.lwjgl:lwjgl'
-    runtimeOnly "org.lwjgl:lwjgl::$lwjglNatives"
+    runtimeOnly "org.lwjgl:lwjgl::$lwjglNatives" // Agrega esta biblioteca solo al runtime para su distribucion
     // Framework de prueba JUnit
 	testImplementation 'junit:junit:4.13.2'
 }
+
+/* Creo que esta tarea tiene que ir en la carpeta buildSrc para dejar mas limpio el build.
+ * Ver: https://docs.gradle.org/current/userguide/toolchains.html */
+java {
+    toolchain {
+        /* Verifica si java 8 esta instalado; sino lo encuentra, lo descarga desde internet (ADOPTIUM) y lo 
+         * almacena en cache. Esto significa que cada vez que este proyecto compile o ejecute java, siempre
+         * usara la version 8 y no la version con la que ejecuta gradle. */
+        languageVersion = JavaLanguageVersion.of(8)
+        vendor = JvmVendorSpec.ADOPTIUM
+    }
+}
+
+// Task :run para ejecutar la aplicacion a partir de la clase principal
+application {
+    mainClass = 'com.craivet.Main'
+}
+
+// Que son las dependencias transitivas?
