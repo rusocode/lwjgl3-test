@@ -1,10 +1,6 @@
-// El plugin application aplica automaticamente el plugin de java, por lo que no es necesario aplicar ambos
-apply plugin: 'application'
-// Entonces no hace falta agregar el plugin de java? Ver: https://tomgregory.com/10-best-gradle-plugins-for-java-projects/
-// apply plugin: 'java'
-/* Los 2 tipos principales de componentes de software Java que puede crear son aplicaciones y bibliotecas. Para crear 
- * una biblioteca que sera consumida por otros proyectos de Java, aplique el plugin java-library. */
-// apply plugin: 'java-library'
+plugins {
+    id 'application'
+}
 
 group 'com.craivet'
 version '0.1.0'
@@ -14,16 +10,8 @@ ext {
     lwjglNatives = 'natives-windows'
 }
 
-// sourceSets.main.java.srcDirs = [ "src/main/java/" ]
-
-/* sourceSets {
-    main.java.srcDirs = ["src/main/java/"]
-    main.resources.srcDirs = ["resources/"]
-} */
-
 repositories {
     mavenCentral()
-    mavenLocal()
 }
 
 dependencies {
@@ -32,7 +20,6 @@ dependencies {
     // Define dependencias sin versionar usando el BOM
     implementation 'org.lwjgl:lwjgl'
     runtimeOnly "org.lwjgl:lwjgl::$lwjglNatives" // Agrega esta biblioteca solo al runtime para su distribucion
-    // Framework de prueba JUnit
 	testImplementation 'junit:junit:4.13.2'
 }
 
@@ -48,9 +35,7 @@ java {
     }
 }
 
-// Task :run para ejecutar la aplicacion a partir de la clase principal
+// Define la clase principal para poder ejecutarla (:run)
 application {
     mainClass = 'com.craivet.Main'
 }
-
-// Que son las dependencias transitivas?
