@@ -5,7 +5,7 @@ plugins {
 group 'com.craivet'
 version '0.1.0'
 
-// Define la clase principal para poder ejecutarla (:run)
+// Especifica la clase principal para poder ejecutar la aplicacion (:run)
 application {
     mainClass = 'com.craivet.Main'
 }
@@ -32,7 +32,7 @@ repositories {
 }
 
 dependencies {
-    // BOM https://github.com/LWJGL/lwjgl3/issues/481
+    // Importa el BOM https://github.com/LWJGL/lwjgl3/issues/481 - https://docs.gradle.org/current/userguide/platforms.html#sub:bom_import
     implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
     // Define las dependencias lwjgl sin versionar ya que se especifican en el BOM
     implementation 'org.lwjgl:lwjgl'
