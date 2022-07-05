@@ -5,6 +5,23 @@ plugins {
 group 'com.craivet'
 version '0.1.0'
 
+// Define la clase principal para poder ejecutarla (:run)
+application {
+    mainClass = 'com.craivet.Main'
+}
+
+/* Creo que esta tarea tiene que ir en la carpeta buildSrc para dejar mas limpio el build.
+ * Ver: https://docs.gradle.org/current/userguide/toolchains.html */
+java {
+    toolchain {
+        /* Verifica si java 8 esta instalado; sino lo encuentra, lo descarga desde internet (ADOPTIUM) y lo
+         * almacena en cache. Esto significa que cada vez que este proyecto compile o ejecute java, siempre
+         * usara la version 8 y no la version con la que ejecuta gradle. */
+        languageVersion = JavaLanguageVersion.of(8)
+        vendor = JvmVendorSpec.ADOPTIUM
+    }
+}
+
 ext {
     lwjglVersion = '3.3.1'
     lwjglNatives = 'natives-windows'
@@ -17,25 +34,8 @@ repositories {
 dependencies {
     // BOM https://github.com/LWJGL/lwjgl3/issues/481
     implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
-    // Define dependencias sin versionar usando el BOM
+    // Define las dependencias lwjgl sin versionar ya que se especifican en el BOM
     implementation 'org.lwjgl:lwjgl'
-    runtimeOnly "org.lwjgl:lwjgl::$lwjglNatives" // Agrega esta biblioteca solo al runtime para su distribucion
-	testImplementation 'junit:junit:4.13.2'
-}
-
-/* Creo que esta tarea tiene que ir en la carpeta buildSrc para dejar mas limpio el build.
- * Ver: https://docs.gradle.org/current/userguide/toolchains.html */
-java {
-    toolchain {
-        /* Verifica si java 8 esta instalado; sino lo encuentra, lo descarga desde internet (ADOPTIUM) y lo 
-         * almacena en cache. Esto significa que cada vez que este proyecto compile o ejecute java, siempre
-         * usara la version 8 y no la version con la que ejecuta gradle. */
-        languageVersion = JavaLanguageVersion.of(8)
-        vendor = JvmVendorSpec.ADOPTIUM
-    }
-}
-
-// Define la clase principal para poder ejecutarla (:run)
-application {
-    mainClass = 'com.craivet.Main'
+    runtimeOnly "org.lwjgl:lwjgl::$lwjglNatives" // Agrega los nativos solo al runtime
+    testImplementation 'junit:junit:4.13.2'
 }
