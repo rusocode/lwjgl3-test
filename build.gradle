@@ -5,11 +5,6 @@ plugins {
 group 'com.craivet'
 version '0.1.0'
 
-// Especifica la clase principal para poder ejecutar la aplicacion (:run)
-application {
-    mainClass = 'com.craivet.Main'
-}
-
 /* Creo que esta tarea tiene que ir en la carpeta buildSrc para dejar mas limpio el build.
  * Ver: https://docs.gradle.org/current/userguide/toolchains.html */
 java {
@@ -20,6 +15,11 @@ java {
         languageVersion = JavaLanguageVersion.of(8)
         vendor = JvmVendorSpec.ADOPTIUM
     }
+}
+
+// Especifica la clase principal para poder ejecutar la aplicacion (:run)
+application {
+    mainClass = 'com.craivet.Main'
 }
 
 ext {
